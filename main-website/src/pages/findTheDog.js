@@ -34,7 +34,7 @@ const FindTheDog = () => {
       }
 
       // Send the image to the server via POST request
-      const response = await fetch('/api/analyze', {
+      const response = await fetch('http://localhost:8080/api/analyze', {
         method: 'POST',
         body: formData, // Send the FormData containing the image
       });
@@ -85,7 +85,7 @@ const FindTheDog = () => {
         </div>
         <div className="result-section">
 			<h2>Result</h2>
-			<p>The image that was processed.</p>
+			<p>The image after processing.</p>
           {processedImage && (
             <div>
               <h2>Processed Image:</h2>
