@@ -47,25 +47,7 @@ input[type="file"]:hover {
     /* Darker border on hover */
 }
 
-input[type="file"]::file-selector-button {
-    background-color: #007bff;
-    /* Primary button color */
-    color: white;
-    border: none;
-    border-radius: 8px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-    /* Smooth transition for background color */
-}
-
-input[type="file"]::file-selector-button:hover {
-    background-color: #0056b3;
-    /* Darker blue on hover */
-}
-
-img {
+.uploaded-image {
     max-width: 100%;
     /* Ensure the image fits within the container */
     height: auto;
@@ -78,4 +60,48 @@ img {
     /* Space above the image */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* Subtle shadow for depth */
+}
+
+.image-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center align the contents horizontally */
+    margin-top: 1rem;
+    /* Space from the top */
+}
+
+.upload-button {
+    margin-top: 1rem;
+    /* Space above the button */
+    padding: 0.75rem 1.5rem;
+    /* Add padding for better touch target */
+    font-size: 1rem;
+    /* Font size for the button text */
+    color: #fff;
+    /* White text color */
+    background-color: #007bff;
+    /* Primary button color */
+    border: none;
+    /* Remove border */
+    border-radius: 8px;
+    /* Rounded corners for the button */
+    cursor: pointer;
+    /* Pointer cursor on hover */
+    transition: background-color 0.3s ease;
+    /* Smooth transition for background color */
+    display: inline-block;
+    /* Inline block to respect margin */
+}
+
+.upload-button:hover {
+    background-color: #0056b3;
+    /* Darker blue on hover */
+}
+
+.upload-button:disabled {
+    background-color: #b0bec5;
+    /* Disabled state background color */
+    cursor: not-allowed;
+    /* Not-allowed cursor for disabled state */
 }
