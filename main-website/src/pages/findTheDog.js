@@ -22,20 +22,29 @@ const FindTheDog = () => {
 
   // Function to handle the analyse button click
   const handleAnalyseClick = async () => {
+    if (!image) return;
+
     setAnalysing(true);
     try {
+      // Create a FormData object and append the image data
+      const formData = new FormData();
+      const fileInput = document.querySelector('input[type="file"]');
+      if (fileInput.files.length > 0) {
+        formData.append('image', fileInput.files[0]); // Add the image file to the form data
+      }
+
+      // Send the image to the server via POST request
       const response = await fetch('/api/analyze', {
         method: 'POST',
-        body: JSON.stringify({ image }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        body: formData, // Send the FormData containing the image
       });
 
-      const result = await response.json();
-      setProcessedImage(result.processedImage); // Assuming the server returns the processed image URL
+      // Assuming the server returns the image as a blob
+      const blob = await response.blob();
+      const processedImageUrl = URL.createObjectURL(blob); // Create a URL for the processed image
+      setProcessedImage(processedImageUrl); // Set the processed image URL to state
     } catch (error) {
-      console.error('Error analysing image:', error);
+      console.error('Error uploading image:', error);
     } finally {
       setAnalysing(false);
     }
