@@ -1,0 +1,71 @@
+/* Filename - findTheDog.css */
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    /* Light gray background for the whole page */
+}
+
+div {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #333;
+    /* Dark gray text color */
+    margin-top: 5rem;
+    /* Space from the top */
+    margin-bottom: 2rem;
+}
+
+div>div {
+    background-color: #ffffff;
+    /* White background for content sections */
+    border: 1px solid #e0e0e0;
+    /* Light gray border */
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin: 1rem auto;
+    max-width: 800px;
+    /* Maximum width for readability */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+}
+
+div>div:nth-of-type(1) {
+    margin-top: 2rem;
+    /* Additional space for the first content section */
+}
+
+div>div:nth-of-type(2) {
+    margin-bottom: 2rem;
+    /* Additional space for the second content section */
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+        /* Smaller font size for smaller screens */
+    }
+
+    div>div {
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+        /* Further reduced font size for very small screens */
+    }
+
+    div>div {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        /* Smaller font size for content */
+    }
+}

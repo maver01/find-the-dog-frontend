@@ -1,0 +1,76 @@
+/* Filename - home.css */
+
+body {
+    margin: 0;
+    font-family: 'Arial', sans-serif;
+    background-color: #f5f5f5;
+    /* Light gray background */
+}
+
+div {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 3rem;
+    color: #333;
+    /* Dark gray text color */
+    margin-top: 20vh;
+    /* Center the heading vertically */
+    margin-bottom: 1rem;
+}
+
+.get-started-button {
+    background-color: #0b4252;
+    /* Light blue background */
+    border: none;
+    color: white;
+    padding: 12px 24px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow */
+    transition: background-color 0.3s, transform 0.3s;
+    /* Smooth transitions */
+}
+
+.get-started-button:hover {
+    background-color: #b24fd0;
+    /* Slightly darker blue on hover */
+    transform: scale(1.05);
+    /* Slight zoom effect on hover */
+}
+
+.get-started-button:active {
+    background-color: #0b314d;
+    /* Even darker blue when button is pressed */
+    transform: scale(1);
+    /* Reset zoom effect when pressed */
+}
+
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2.5rem;
+        /* Smaller font size for smaller screens */
+    }
+
+    .get-started-button {
+        font-size: 1rem;
+        padding: 10px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 2rem;
+        /* Further reduced font size for very small screens */
+    }
+
+    .get-started-button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+    }
+}
