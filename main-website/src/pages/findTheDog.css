@@ -1,20 +1,35 @@
 /* Filename - findTheDog.css */
 
-.container {
-    max-width: 800px;
-    /* Max width for better readability */
-    margin: 2rem auto;
-    /* Center align and space out from top/bottom */
+.vertical-sections-container {
+    display: flex;
+    height: 100vh;
+    /* Full viewport height */
+    width: 100%;
+    /* Full width */
+    background-color: #0056b3;
+}
+
+.upload-section,
+.result-section {
+    background: #97eecd;
+    flex: 1;
+    /* Equal space for both sections */
     padding: 2rem;
-    /* Add ample padding for spacing */
-    text-align: center;
-    /* Center align text */
-    background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
-    /* Subtle gradient background */
-    border-radius: 12px;
-    /* Rounded corners for the container */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    /* Smooth shadow for depth */
+    /* Padding around the sections */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* Center align items horizontally */
+    justify-content: center;
+    /* Center align items vertically */
+    box-sizing: border-box;
+    /* Include padding and border in the element's total width and height */
+}
+
+.upload-section {
+    background: #b8d4f0;
+    border-right: 2px solid #fff;
+    /* Add separator between sections */
 }
 
 h1 {
@@ -22,14 +37,23 @@ h1 {
     /* Larger font size for the heading */
     color: #333;
     /* Dark text color for contrast */
-    margin-bottom: 1.5rem;
+    margin-bottom: 1rem;
     /* Space below the heading */
+}
+
+p {
+    font-size: 1.2rem;
+    /* Font size for the description */
+    color: #666;
+    /* Slightly gray text color */
+    margin-bottom: 1.5rem;
+    /* Space below the description */
 }
 
 input[type="file"] {
     display: block;
-    margin: 1rem auto;
-    /* Center align and add spacing */
+    margin-bottom: 1rem;
+    /* Space below the file input */
     padding: 0.75rem;
     /* Add padding for better touch target */
     border: 2px solid #ddd;
@@ -56,24 +80,13 @@ input[type="file"]:hover {
     /* Light border around the image */
     border-radius: 12px;
     /* Rounded corners for the image */
-    margin-top: 1.5rem;
-    /* Space above the image */
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     /* Subtle shadow for depth */
+    margin-bottom: 1rem;
+    /* Space below the uploaded image */
 }
 
-.image-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    /* Center align the contents horizontally */
-    margin-top: 1rem;
-    /* Space from the top */
-}
-
-.upload-button {
-    margin-top: 1rem;
-    /* Space above the button */
+.analyse-button {
     padding: 0.75rem 1.5rem;
     /* Add padding for better touch target */
     font-size: 1rem;
@@ -90,18 +103,31 @@ input[type="file"]:hover {
     /* Pointer cursor on hover */
     transition: background-color 0.3s ease;
     /* Smooth transition for background color */
-    display: inline-block;
-    /* Inline block to respect margin */
+    margin-top: 1rem;
+    /* Add space between the image and button */
 }
 
-.upload-button:hover {
+.analyse-button:hover {
     background-color: #0056b3;
     /* Darker blue on hover */
 }
 
-.upload-button:disabled {
+.analyse-button:disabled {
     background-color: #b0bec5;
     /* Disabled state background color */
     cursor: not-allowed;
     /* Not-allowed cursor for disabled state */
+}
+
+.processed-image {
+    max-width: 100%;
+    /* Ensure the image fits within the container */
+    height: auto;
+    /* Maintain aspect ratio */
+    border: 1px solid #ddd;
+    /* Light border around the image */
+    border-radius: 12px;
+    /* Rounded corners for the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Subtle shadow for depth */
 }
