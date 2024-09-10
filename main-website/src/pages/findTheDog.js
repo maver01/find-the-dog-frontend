@@ -7,6 +7,7 @@ const FindTheDog = () => {
   const [image, setImage] = useState(null); // State to store the uploaded image
   const [processedImage, setProcessedImage] = useState(null); // State to store the processed image
   const [analysing, setAnalysing] = useState(false); // State to manage analyse status
+  const [error, setError] = useState(false); // State to manage error status
 
   // Function to handle file input change
   const handleFileChange = (event) => {
@@ -25,6 +26,8 @@ const FindTheDog = () => {
     if (!image) return;
 
     setAnalysing(true);
+    setError(false); // Reset error state
+
     try {
       // Create a FormData object and append the image data
       const formData = new FormData();
@@ -34,10 +37,15 @@ const FindTheDog = () => {
       }
 
       // Send the image to the server via POST request
-      const response = await fetch('http://localhost:8080/api/analyze', {
-        method: 'POST',
-        body: formData, // Send the FormData containing the image
-      });
+      const response = await Promise.race([
+        fetch('http://localhost:8080/api/analyze', {
+          method: 'POST',
+          body: formData, // Send the FormData containing the image
+        }),
+        new Promise((_, reject) =>
+          setTimeout(() => reject(new Error('Timeout')), 2000) // Reject the promise after 2 seconds
+        ),
+      ]);
 
       // Assuming the server returns the image as a blob
       const blob = await response.blob();
@@ -45,6 +53,7 @@ const FindTheDog = () => {
       setProcessedImage(processedImageUrl); // Set the processed image URL to state
     } catch (error) {
       console.error('Error uploading image:', error);
+      setError(true); // Set error state to true
     } finally {
       setAnalysing(false);
     }
@@ -54,51 +63,41 @@ const FindTheDog = () => {
     <div>
       <div>
         <h1>Find the Dog</h1>
-		Upload a picture, we will find the dog for you.
+        Upload a picture, we will find the dog for you.
       </div>
       <div className="vertical-sections-container">
         <div className="upload-section">
           <h2>Upload a picture</h2>
           <p>The picture may or may not contain a dog.</p>
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleFileChange}
-          />
+          <input type="file" accept="image/*" onChange={handleFileChange} />
           {image && (
-			<>
-			<h3>Uploaded Image:</h3>
-			<img
-			  src={image}
-			  alt="Uploaded Preview"
-			  className="uploaded-image"
-			/>
-            <button
-              onClick={handleAnalyseClick}
-              className="analyse-button"
-              disabled={analysing}
-            >
-              {analysing ? 'Analysing picture...' : 'Analyse'}
-            </button>
-			</>
+            <>
+              <h3>Uploaded Image:</h3>
+              <img src={image} alt="Uploaded Preview" className="uploaded-image" />
+              <button
+                onClick={handleAnalyseClick}
+                className="analyse-button"
+                disabled={analysing}
+              >
+                {analysing ? 'Analysing picture...' : 'Analyse'}
+              </button>
+              {error && <p>Error: Image processing timed out.</p>} {/* Display error message */}
+            </>
           )}
         </div>
         <div className="result-section">
-			<h2>Result</h2>
-			<p>The image after processing.</p>
+          <h2>Result</h2>
+          <p>The image after processing.</p>
           {processedImage && (
             <div>
               <h2>Processed Image:</h2>
-              <img
-                src={processedImage}
-                alt="Processed Preview"
-                className="processed-image"
-              />
+              <img src={processedImage} alt="Processed Preview" className="processed-image" />
             </div>
           )}
         </div>
       </div>
     </div>
   );
-}
+};
+
 export default FindTheDog;
