@@ -1,5 +1,3 @@
-// Filename - pages/FindTheDog.js
-
 import React, { useState } from 'react';
 import './findTheDog.css';
 
@@ -21,6 +19,30 @@ const FindTheDog = () => {
     }
   };
 
+  // Poll the server to get the processed image
+  const pollForProcessedImage = async () => {
+    try {
+      // Wait for 2 seconds before polling
+      await new Promise((resolve) => setTimeout(resolve, 2000));
+      
+      // Poll the backend for the processed image
+      const response = await fetch('http://localhost:8080/api/processed-image');
+
+      if (response.status === 200) {
+        // If the image is ready, process the blob and display the image
+        const blob = await response.blob();
+        const processedImageUrl = URL.createObjectURL(blob); // Create a URL for the processed image
+        setProcessedImage(processedImageUrl); // Set the processed image URL to state
+      } else if (response.status === 204) {
+        // Continue polling if no content yet
+        setTimeout(pollForProcessedImage, 2000);
+      }
+    } catch (error) {
+      console.error('Error fetching processed image:', error);
+      setError(true); // Set error state to true
+    }
+  };
+
   // Function to handle the analyse button click
   const handleAnalyseClick = async () => {
     if (!image) return;
@@ -37,23 +59,21 @@ const FindTheDog = () => {
       }
 
       // Send the image to the server via POST request
-      const response = await Promise.race([
-        fetch('http://localhost:8080/api/analyze', {
-          method: 'POST',
-          body: formData, // Send the FormData containing the image
-        }),
-        new Promise((_, reject) =>
-          setTimeout(() => reject(new Error('Timeout')), 2000) // Reject the promise after 2 seconds
-        ),
-      ]);
+      const response = await fetch('http://localhost:8080/api/analyze', {
+        method: 'POST',
+        body: formData, // Send the FormData containing the image
+      });
 
-      // Assuming the server returns the image as a blob
-      const blob = await response.blob();
-      const processedImageUrl = URL.createObjectURL(blob); // Create a URL for the processed image
-      setProcessedImage(processedImageUrl); // Set the processed image URL to state
+      if (response.ok) {
+        // Start polling the server for the processed image
+        pollForProcessedImage();
+      } else {
+        console.error('Error analysing image:', response.statusText);
+        setError(true); // Set error state
+      }
     } catch (error) {
       console.error('Error uploading image:', error);
-      setError(true); // Set error state to true
+      setError(true); // Set error state
     } finally {
       setAnalysing(false);
     }
@@ -81,7 +101,7 @@ const FindTheDog = () => {
               >
                 {analysing ? 'Analysing picture...' : 'Analyse'}
               </button>
-              {error && <p>Error: Image processing timed out.</p>} {/* Display error message */}
+              {error && <p>Error: Image processing failed.</p>} {/* Display error message */}
             </>
           )}
         </div>
