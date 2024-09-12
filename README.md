@@ -33,7 +33,7 @@ Directory tree of _src_ folder:
 
 ## Understand the code
 
-The website contains 3 pages. The findTheDog page, triggers a post request to send the uploaded image to the listenng server. It then polls the server for incoming processed image. All server requests are made though _localhost_.
+The website contains 3 pages. The findTheDog page triggers a post request to send the uploaded image to the listening server. It then polls the server for incoming processed image. All server requests are made though _localhost_.
 
 ## Run the code
 
