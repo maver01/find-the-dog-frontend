@@ -4,7 +4,7 @@ import './findTheDog.css';
 
 const FindTheDog = () => {
   const [image, setImage] = useState(null); // State to store the uploaded image
-  const [processedImage, setProcessedImage] = useState(null); // State to store the processed image
+  const [classLabel, setClassLabel] = useState(null); // State to store the class label
   const [analysing, setAnalysing] = useState(false); // State to manage analyse status
   const [error, setError] = useState(false); // State to manage error status
   const [requestId, setRequestId] = useState(null); // State to store the request ID
@@ -21,26 +21,23 @@ const FindTheDog = () => {
     }
   };
 
-  // Poll the server to get the processed image
-  const pollForProcessedImage = async (requestId) => {
+  // Poll the server to get the processed class label
+  const pollForProcessedLabel = async (requestId) => {
     try {
-      // Wait for 2 seconds before polling
-      //await new Promise((resolve) => setTimeout(resolve, 10000));
       
-      // Poll the backend for the processed image
-      const response = await fetch(`http://localhost:8080/api/processed-image/${requestId}`);
+      // Poll the backend for the processed label
+      const response = await fetch(`http://localhost:8080/api/processed-label/${requestId}`);
 
       if (response.status === 200) {
-        // If the image is ready, process the blob and display the image
-        const blob = await response.blob();
-        const processedImageUrl = URL.createObjectURL(blob); // Create a URL for the processed image
-        setProcessedImage(processedImageUrl); // Set the processed image URL to state
+        // If the label is ready, parse and display it
+        const label = await response.text();
+        setClassLabel(label); // Set the class label to state
       } else if (response.status === 204) {
         // Continue polling if no content yet
-        pollForProcessedImage(requestId);
+        pollForProcessedLabel(requestId);
       }
     } catch (error) {
-      console.error('Error fetching processed image:', error);
+      console.error('Error fetching processed label:', error);
       setError(true); // Set error state to true
     }
   };
@@ -71,8 +68,8 @@ const FindTheDog = () => {
       });
 
       if (response.ok) {
-        // Start polling the server for the processed image
-        pollForProcessedImage(requestId);
+        // Start polling the server for the processed label
+        pollForProcessedLabel(requestId);
       } else {
         console.error('Error analysing image:', response.statusText);
         setError(true); // Set error state
@@ -89,7 +86,7 @@ const FindTheDog = () => {
     <div>
       <div>
         <h1>Find the Dog</h1>
-        Upload a picture, we will find the dog for you.
+        Upload a picture, and we will find the dog for you.
       </div>
       <div className="vertical-sections-container">
         <div className="upload-section">
@@ -113,11 +110,11 @@ const FindTheDog = () => {
         </div>
         <div className="result-section">
           <h2>Result</h2>
-          <p>The image after processing.</p>
-          {processedImage && (
+          <p>The class label after processing.</p>
+          {classLabel && (
             <div>
-              <h2>Processed Image:</h2>
-              <img src={processedImage} alt="Processed Preview" className="processed-image" />
+              <h2>Class Label:</h2>
+              <p>{classLabel}</p>
             </div>
           )}
         </div>
