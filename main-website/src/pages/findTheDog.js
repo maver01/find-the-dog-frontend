@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid'; // Import uuid library
 import './findTheDog.css';
 
 const FindTheDog = () => {
@@ -6,6 +7,7 @@ const FindTheDog = () => {
   const [processedImage, setProcessedImage] = useState(null); // State to store the processed image
   const [analysing, setAnalysing] = useState(false); // State to manage analyse status
   const [error, setError] = useState(false); // State to manage error status
+  const [requestId, setRequestId] = useState(null); // State to store the request ID
 
   // Function to handle file input change
   const handleFileChange = (event) => {
@@ -20,13 +22,13 @@ const FindTheDog = () => {
   };
 
   // Poll the server to get the processed image
-  const pollForProcessedImage = async () => {
+  const pollForProcessedImage = async (requestId) => {
     try {
       // Wait for 2 seconds before polling
-      await new Promise((resolve) => setTimeout(resolve, 2000));
+      //await new Promise((resolve) => setTimeout(resolve, 10000));
       
       // Poll the backend for the processed image
-      const response = await fetch('http://localhost:8080/api/processed-image');
+      const response = await fetch(`http://localhost:8080/api/processed-image/${requestId}`);
 
       if (response.status === 200) {
         // If the image is ready, process the blob and display the image
@@ -35,7 +37,7 @@ const FindTheDog = () => {
         setProcessedImage(processedImageUrl); // Set the processed image URL to state
       } else if (response.status === 204) {
         // Continue polling if no content yet
-        setTimeout(pollForProcessedImage, 2000);
+        pollForProcessedImage(requestId);
       }
     } catch (error) {
       console.error('Error fetching processed image:', error);
@@ -51,11 +53,15 @@ const FindTheDog = () => {
     setError(false); // Reset error state
 
     try {
+      const requestId = uuidv4(); // Generate a unique ID for the image
+      setRequestId(requestId); // Set the unique ID in state
+
       // Create a FormData object and append the image data
       const formData = new FormData();
       const fileInput = document.querySelector('input[type="file"]');
       if (fileInput.files.length > 0) {
         formData.append('image', fileInput.files[0]); // Add the image file to the form data
+        formData.append('requestId', requestId); // Append the unique ID to the form data
       }
 
       // Send the image to the server via POST request
@@ -66,7 +72,7 @@ const FindTheDog = () => {
 
       if (response.ok) {
         // Start polling the server for the processed image
-        pollForProcessedImage();
+        pollForProcessedImage(requestId);
       } else {
         console.error('Error analysing image:', response.statusText);
         setError(true); // Set error state
