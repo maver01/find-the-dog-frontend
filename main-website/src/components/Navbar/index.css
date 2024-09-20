@@ -1,0 +1,59 @@
+/* Filename - ./components/Navbar/NavabarElements.css */
+
+.nav {
+    background: #333;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 12;
+}
+
+.nav-menu {
+    background: #333;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    z-index: 12;
+}
+
+.nav-item {
+    height: 100%;
+}
+
+.nav-link {
+    color: #fff;
+    text-decoration: none;
+    padding: 0 10px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    transition: color 0.3s ease;
+    list-style: none;
+}
+
+.nav-link:hover {
+    color: #4d4dff;
+}
+
+.bars {
+    display: none;
+    color: #fff;
+}
+
+@media screen and (max-width: 768px) {
+    .bars {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(-100%, 75%);
+        font-size: 1.8rem;
+        cursor: pointer;
+    }
+}

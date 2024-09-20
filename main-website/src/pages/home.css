@@ -1,25 +1,39 @@
 /* Filename - home.css */
 
-body {
-    margin: 0;
-    font-family: 'Arial', sans-serif;
-    background-color: #f5f5f5;
-    /* Light gray background */
-}
-
-div {
+.home-background {
+    background-color: #f2f2f2;
+    /* Fallback background color */
+    background-image: url('https://images.unsplash.com/photo-1557683316-973673baf926');
+    /* Background image */
+    background-size: cover;
+    /* Cover the entire element */
+    background-position: center;
+    /* Full viewport height */
+    width: 100%;
+    display: flex;
+    /* Flexbox layout */
+    flex-direction: column;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* White text */
     text-align: center;
-    margin: 0;
-    padding: 0;
+    /* Center text */
+    height: 100vh;
 }
 
-h1 {
-    font-size: 3rem;
-    color: #333;
-    /* Dark gray text color */
-    margin-top: 20vh;
-    /* Center the heading vertically */
-    margin-bottom: 1rem;
+.home-title {
+    background-color: transparent;
+    box-shadow: none;
+    margin: 2rem;
+    font-size: 5rem;
+}
+
+.home-subtitle {
+    background-color: transparent;
+    box-shadow: none;
+    margin: 2rem;
+    font-size: 1.5rem;
 }
 
 .get-started-button {
@@ -49,28 +63,4 @@ h1 {
     /* Even darker blue when button is pressed */
     transform: scale(1);
     /* Reset zoom effect when pressed */
-}
-
-@media (max-width: 768px) {
-    h1 {
-        font-size: 2.5rem;
-        /* Smaller font size for smaller screens */
-    }
-
-    .get-started-button {
-        font-size: 1rem;
-        padding: 10px 20px;
-    }
-}
-
-@media (max-width: 480px) {
-    h1 {
-        font-size: 2rem;
-        /* Further reduced font size for very small screens */
-    }
-
-    .get-started-button {
-        font-size: 0.9rem;
-        padding: 8px 16px;
-    }
 }

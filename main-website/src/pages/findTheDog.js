@@ -83,7 +83,7 @@ const FindTheDog = () => {
   };
 
   return (
-    <div>
+    <div className="whole-page">
       <div>
         <h1>Find the Dog</h1>
         Upload a picture, and we will find the dog for you.
