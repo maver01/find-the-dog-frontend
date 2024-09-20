@@ -83,19 +83,18 @@ const FindTheDog = () => {
   };
 
   return (
-    <div className="whole-page">
+    <div className="home-background">
       <div>
-        <h1>Find the Dog</h1>
-        Upload a picture, and we will find the dog for you.
+        <h1 className='home-title'>Find the Dog</h1>
+        <div className="home-subtitle">Upload a picture, we will find what is in it.</div>
       </div>
       <div className="vertical-sections-container">
         <div className="upload-section">
-          <h2>Upload a picture</h2>
-          <p>The picture may or may not contain a dog.</p>
+          <h2 className="home-subtitle">Upload a picture</h2>
           <input type="file" accept="image/*" onChange={handleFileChange} />
           {image && (
             <>
-              <h3>Uploaded Image:</h3>
+              <h3 className="home-subtitle">Uploaded Image:</h3>
               <img src={image} alt="Uploaded Preview" className="uploaded-image" />
               <button
                 onClick={handleAnalyseClick}
@@ -109,7 +108,7 @@ const FindTheDog = () => {
           )}
         </div>
         <div className="result-section">
-          <h2>Result</h2>
+          <h2 className="home-subtitle">Result:</h2>
           <p>The class label after processing.</p>
           {classLabel && (
             <div>
