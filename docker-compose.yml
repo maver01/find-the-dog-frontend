@@ -1,0 +1,16 @@
+services:
+
+  frontend:
+    image: node:14
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    command: npm start
+    networks:
+      - find_the_dog_network
+    
+networks:
+  find_the_dog_network:
+    external: true

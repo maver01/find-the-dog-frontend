@@ -26,7 +26,7 @@ const FindTheDog = () => {
     try {
       
       // Poll the backend for the processed label
-      const response = await fetch(`http://localhost:8080/api/processed-label/${requestId}`);
+      const response = await fetch(`http://find-the-dog-server:8080/api/processed-label/${requestId}`);
 
       if (response.status === 200) {
         // If the label is ready, parse and display it
@@ -62,7 +62,7 @@ const FindTheDog = () => {
       }
 
       // Send the image to the server via POST request
-      const response = await fetch('http://localhost:8080/api/analyze', {
+      const response = await fetch('http://find-the-dog-server:8080/api/analyze', {
         method: 'POST',
         body: formData, // Send the FormData containing the image
       });
@@ -113,7 +113,7 @@ const FindTheDog = () => {
           {classLabel && (
             <div>
               <h2>Class Label:</h2>
-              <p>{classLabel}</p>
+              <h1>{classLabel}</h1>
             </div>
           )}
         </div>
