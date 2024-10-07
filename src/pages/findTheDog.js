@@ -26,7 +26,8 @@ const FindTheDog = () => {
     try {
       
       // Poll the backend for the processed label
-      const response = await fetch(`http://find-the-dog-server:8080/api/processed-label/${requestId}`);
+      const response = await fetch(`http://localhost:8080/api/processed-label/${requestId}`, {
+      });
 
       if (response.status === 200) {
         // If the label is ready, parse and display it
@@ -61,14 +62,18 @@ const FindTheDog = () => {
         formData.append('requestId', requestId); // Append the unique ID to the form data
       }
 
+      console.log("Sending the image to the server:", "http://localhost:8080/api/analyze");
+      // print IP address
+      console.log('IP address:', window.location.hostname);
       // Send the image to the server via POST request
-      const response = await fetch('http://find-the-dog-server:8080/api/analyze', {
+      const response = await fetch("http://localhost:8080/api/analyze", {
         method: 'POST',
         body: formData, // Send the FormData containing the image
       });
 
       if (response.ok) {
         // Start polling the server for the processed label
+        console.log('Polling from the server: ', `http://localhost:8080/api/processed-label/${requestId}`);
         pollForProcessedLabel(requestId);
       } else {
         console.error('Error analysing image:', response.statusText);

@@ -49,7 +49,6 @@ const BlackFireCursor = () => {
   }, [mousePosition]);
 
   useEffect(() => {
-    const id = 0; // id will always be between 1 and 10
     setCircles((prevCircles) => {
       const updatedCircles = prevCircles.map(circle => ({
         ...circle,

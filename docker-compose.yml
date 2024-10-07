@@ -1,15 +1,16 @@
 services:
 
   frontend:
-    image: node:14
+    image: node:20
     working_dir: /app
     volumes:
       - .:/app
     ports:
       - "3000:3000"
-    command: npm start
+      - "80:80"
     networks:
       - find_the_dog_network
+    command: npm start
     
 networks:
   find_the_dog_network:
